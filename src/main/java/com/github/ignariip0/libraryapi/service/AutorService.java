@@ -25,5 +25,8 @@ public class AutorService {
         return repository.findById(id);
     }
 
+    public void deletar(Autor autor){
+        repository.delete(autor);
+    }
 
 }
