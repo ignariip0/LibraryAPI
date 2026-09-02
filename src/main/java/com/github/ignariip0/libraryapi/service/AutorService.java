@@ -2,6 +2,7 @@ package com.github.ignariip0.libraryapi.service;
 
 import com.github.ignariip0.libraryapi.model.Autor;
 import com.github.ignariip0.libraryapi.repository.AutorRepository;
+import com.github.ignariip0.libraryapi.validator.AutorValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,12 +14,15 @@ public class AutorService {
 
 
     private final AutorRepository repository;
+    private final AutorValidator validator;
 
-    public AutorService(AutorRepository repository){
+    public AutorService(AutorRepository repository, AutorValidator validator){
         this.repository = repository;
+        this.validator = validator;
     }
 
     public Autor salvar(Autor autor){
+        validator.validar(autor);
         return repository.save(autor);
     }
 
@@ -26,6 +30,7 @@ public class AutorService {
         if(autor.getId() == null){
             throw new IllegalArgumentException("Para atualizar é necessário que o autor ja esteja salvo na base.");
         }
+        validator.validar(autor);
         repository.save(autor);
     }
 
