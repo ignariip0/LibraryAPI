@@ -9,11 +9,11 @@ import java.util.UUID;
 
 public record AutorDTO(
         UUID id,
-        @NotBlank(message = "Campo obrigatório")
+        @NotBlank(message = "campo obrigatório")
         String nome,
-        @NotNull(message = "Campo obrigatório")
+        @NotNull(message = "campo obrigatório")
         LocalDate dataNascimento,
-        @NotBlank(message = "Campo obrigatório")
+        @NotBlank(message = "campo obrigatório")
         String nacionalidade
 ) {
 

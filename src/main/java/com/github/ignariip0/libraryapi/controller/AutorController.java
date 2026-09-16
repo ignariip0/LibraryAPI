@@ -33,7 +33,6 @@ public class AutorController {
             Autor autorEntidade = autor.mapearParaAutor();
             service.salvar(autorEntidade);
 
-
             // http://localhost:8080/autores/id
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
