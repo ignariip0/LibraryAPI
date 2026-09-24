@@ -47,21 +47,21 @@ public class AutorService {
         repository.delete(autor);
     }
 
-    public List<Autor> pesquisa(String nome, String nacionalidade){
-        if (nome != null && nacionalidade != null){
-            return repository.findByNomeAndNacionalidade(nome, nacionalidade);
-        }
-
-        if (nome != null){
-            return repository.findByNome(nome);
-        }
-
-        if (nacionalidade != null){
-            return repository.findByNacionalidade(nacionalidade);
-        }
-
-        return repository.findAll();
-    }
+//    public List<Autor> pesquisa(String nome, String nacionalidade){
+//        if (nome != null && nacionalidade != null){
+//            return repository.findByNomeAndNacionalidade(nome, nacionalidade);
+//        }
+//
+//        if (nome != null){
+//            return repository.findByNome(nome);
+//        }
+//
+//        if (nacionalidade != null){
+//            return repository.findByNacionalidade(nacionalidade);
+//        }
+//
+//        return repository.findAll();
+//    }
 
     public List<Autor> pesquisaByExample(String nome, String nacionalidade){
         var autor = new Autor();
