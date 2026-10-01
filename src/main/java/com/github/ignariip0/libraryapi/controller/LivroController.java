@@ -1,8 +1,6 @@
 package com.github.ignariip0.libraryapi.controller;
 
-import com.github.ignariip0.libraryapi.controller.dto.AutorDTO;
 import com.github.ignariip0.libraryapi.controller.dto.CadastroLivroDTO;
-import com.github.ignariip0.libraryapi.controller.dto.ErroResposta;
 import com.github.ignariip0.libraryapi.controller.dto.ResultadoPesquisaLivroDTO;
 import com.github.ignariip0.libraryapi.controller.mappers.LivroMapper;
 import com.github.ignariip0.libraryapi.model.Livro;
@@ -12,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -41,4 +41,14 @@ public class LivroController implements GenericController {
                     return ResponseEntity.ok(dto);
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id){
+        return service.obterPorId(UUID.fromString(id))
+                .map(livro -> {
+                    service.deletar(livro);
+                    return ResponseEntity.noContent().build();
+                }).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
 }

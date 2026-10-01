@@ -1,5 +1,6 @@
 package com.github.ignariip0.libraryapi.service;
 
+import com.github.ignariip0.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import com.github.ignariip0.libraryapi.model.Livro;
 import com.github.ignariip0.libraryapi.repository.LivroRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +22,9 @@ public class LivroService {
 
     public Optional<Livro> obterPorId(UUID id){
         return repository.findById(id);
+    }
+
+    public void deletar(Livro livro) {
+        repository.delete(livro);
     }
 }
