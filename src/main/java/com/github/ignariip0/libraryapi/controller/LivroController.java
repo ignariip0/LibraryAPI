@@ -3,6 +3,7 @@ package com.github.ignariip0.libraryapi.controller;
 import com.github.ignariip0.libraryapi.controller.dto.CadastroLivroDTO;
 import com.github.ignariip0.libraryapi.controller.dto.ResultadoPesquisaLivroDTO;
 import com.github.ignariip0.libraryapi.controller.mappers.LivroMapper;
+import com.github.ignariip0.libraryapi.model.GeneroLivro;
 import com.github.ignariip0.libraryapi.model.Livro;
 import com.github.ignariip0.libraryapi.service.LivroService;
 import jakarta.validation.Valid;
@@ -10,9 +11,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("livros")
@@ -51,4 +54,26 @@ public class LivroController implements GenericController {
                 }).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @GetMapping
+    public ResponseEntity<List<ResultadoPesquisaLivroDTO>> pesquisa(
+            @RequestParam(value = "isbn", required = false)
+            String isbn,
+            @RequestParam(value = "titulo", required = false)
+            String titulo,
+            @RequestParam(value = "nome-autor", required = false)
+            String nomeAutor,
+                @RequestParam(value = "genero", required = false)
+            GeneroLivro genero,
+            @RequestParam(value = "ano-publicacao", required = false)
+            Integer anoPublicacao
+            ){
+
+        var resultado = service.pesquisa(isbn, titulo, nomeAutor, genero, anoPublicacao);
+        var lista = resultado
+                .stream()
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(lista);
+    }
 }
