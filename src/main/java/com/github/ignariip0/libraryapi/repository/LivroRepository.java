@@ -45,7 +45,7 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     List<Livro> listarTodosOrdenadoPorTituloAndPreco();
 
     /**
-     *select a.*
+     * select a.*
      * from livro l
      * join autor a on a.id = l.id_autor
      */
@@ -57,12 +57,12 @@ public interface LivroRepository extends JpaRepository<Livro, UUID>, JpaSpecific
     List<String> listarNomesDiferentesLivros();
 
     @Query("""
-        select l.genero
-        from Livro l
-        join l.autor a
-        where a.nacionalidade = 'Brasileira'
-        order by l.genero
-    """)
+                select l.genero
+                from Livro l
+                join l.autor a
+                where a.nacionalidade = 'Brasileira'
+                order by l.genero
+            """)
     List<String> listarGenerosAutoresBrasileiros();
 
     // named parameters

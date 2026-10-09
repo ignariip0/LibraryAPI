@@ -12,8 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -34,7 +32,7 @@ public class LivroController implements GenericController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable String id){
+    public ResponseEntity<ResultadoPesquisaLivroDTO> obterDetalhes(@PathVariable String id) {
         var idLivro = UUID.fromString(id);
 
         return service
@@ -46,7 +44,7 @@ public class LivroController implements GenericController {
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Object> deletar(@PathVariable("id") String id){
+    public ResponseEntity<Object> deletar(@PathVariable("id") String id) {
         return service.obterPorId(UUID.fromString(id))
                 .map(livro -> {
                     service.deletar(livro);
@@ -62,11 +60,11 @@ public class LivroController implements GenericController {
             String titulo,
             @RequestParam(value = "nome-autor", required = false)
             String nomeAutor,
-                @RequestParam(value = "genero", required = false)
+            @RequestParam(value = "genero", required = false)
             GeneroLivro genero,
             @RequestParam(value = "ano-publicacao", required = false)
             Integer anoPublicacao
-            ){
+    ) {
 
         var resultado = service.pesquisa(isbn, titulo, nomeAutor, genero, anoPublicacao);
         var lista = resultado

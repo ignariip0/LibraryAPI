@@ -23,25 +23,25 @@ public class AutorService {
     private final AutorValidator validator;
     private final LivroRepository livroRepository;
 
-    public Autor salvar(Autor autor){
+    public Autor salvar(Autor autor) {
         validator.validar(autor);
         return repository.save(autor);
     }
 
-    public void atualizar(Autor autor){
-        if(autor.getId() == null){
+    public void atualizar(Autor autor) {
+        if (autor.getId() == null) {
             throw new IllegalArgumentException("Para atualizar é necessário que o autor ja esteja salvo na base.");
         }
         validator.validar(autor);
         repository.save(autor);
     }
 
-    public Optional<Autor> obterPorId(UUID id){
+    public Optional<Autor> obterPorId(UUID id) {
         return repository.findById(id);
     }
 
-    public void deletar(Autor autor){
-        if (possuiLivro(autor)){
+    public void deletar(Autor autor) {
+        if (possuiLivro(autor)) {
             throw new OperacaoNaoPermitidaException("Não é permitido deletar um autor possui livros cadastrados!");
         }
         repository.delete(autor);
@@ -63,14 +63,14 @@ public class AutorService {
 //        return repository.findAll();
 //    }
 
-    public List<Autor> pesquisaByExample(String nome, String nacionalidade){
+    public List<Autor> pesquisaByExample(String nome, String nacionalidade) {
         var autor = new Autor();
         autor.setNome(nome);
         autor.setNacionalidade(nacionalidade);
 
         ExampleMatcher matcher = ExampleMatcher
                 .matching()
-                .withIgnorePaths("id" , "dataNascimento", "dataCadastro")
+                .withIgnorePaths("id", "dataNascimento", "dataCadastro")
                 .withIgnoreNullValues()
                 .withIgnoreCase()
                 .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
@@ -78,7 +78,7 @@ public class AutorService {
         return repository.findAll(autorExample);
     }
 
-    public boolean possuiLivro(Autor autor){
+    public boolean possuiLivro(Autor autor) {
         return livroRepository.existsByAutor(autor);
     }
 

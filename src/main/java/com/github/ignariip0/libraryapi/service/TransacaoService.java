@@ -23,15 +23,15 @@ public class TransacaoService {
 
 
     @Transactional
-    public void atualizacaoSemAtualizar(){
+    public void atualizacaoSemAtualizar() {
         var livro = livroRepository.findById(UUID.fromString("0196c3d4-bf22-482a-8fa7-f512a7a329e9"))
                 .orElse(null);
 
-        livro.setDataPublicacao(LocalDate.of(2025,6,1));
+        livro.setDataPublicacao(LocalDate.of(2025, 6, 1));
     }
 
     @Transactional
-    public void executar(){
+    public void executar() {
         // Salva o autor
         Autor autor = new Autor();
         autor.setNome("Teste Francisco");
@@ -47,13 +47,13 @@ public class TransacaoService {
         livro.setPreco(BigDecimal.valueOf(100));
         livro.setGenero(GeneroLivro.FICCAO);
         livro.setTitulo("Teste Livro do Francisco");
-        livro.setDataPublicacao(LocalDate.of(1980,1,2));
+        livro.setDataPublicacao(LocalDate.of(1980, 1, 2));
 
         livro.setAutor(autor);
 
         livroRepository.save(livro);
 
-        if (autor.getNome().equals("Teste Francisco")){
+        if (autor.getNome().equals("Teste Francisco")) {
             throw new RuntimeException("Rollback");
         }
     }
