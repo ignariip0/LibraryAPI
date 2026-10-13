@@ -72,7 +72,7 @@ public class LivroService {
 
     public void atualizar(Livro livro) {
         if (livro.getId() == null){
-            throw new IllegalArgumentException("Para atualizar é necessário que o autor ja esteja salvo na base.");
+            throw new IllegalArgumentException("Para atualizar é necessário que o livro ja esteja salvo na base.");
         }
 
         validator.validar(livro);

@@ -1,5 +1,6 @@
 package com.github.ignariip0.libraryapi.validator;
 
+import com.github.ignariip0.libraryapi.exceptions.CampoInvalidoException;
 import com.github.ignariip0.libraryapi.exceptions.RegistroDuplicadoException;
 import com.github.ignariip0.libraryapi.model.Livro;
 import com.github.ignariip0.libraryapi.repository.LivroRepository;
@@ -12,18 +13,30 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class LivroValidator {
 
+    private static final int ANO_EXIGENCIA_PRECO = 2020;
+
     private final LivroRepository repository;
 
     public void validar(Livro livro) {
         if (existeLivroComIsbn(livro)) {
             throw new RegistroDuplicadoException("ISBN já cadastrado!");
         }
+
+        if (isPrecoObrigatorioNulo(livro)) {
+            throw new CampoInvalidoException("preço", "Para livros com ano de publicação a partir de 2020, o preço é obrigatorio!");
+        }
+    }
+
+    private boolean isPrecoObrigatorioNulo(Livro livro) {
+        return livro.getPreco() == null &&
+                livro.getDataPublicacao().getYear() >= ANO_EXIGENCIA_PRECO;
     }
 
     private boolean existeLivroComIsbn(Livro livro) {
         Optional<Livro> livroEncontrado = repository.findByIsbn(livro.getIsbn());
-
-        if (livro.getId() == null){
+        System.out.println("id do livro: " + livro.getId());
+        System.out.println("id encontrado: " + livroEncontrado.map(Livro::getId).orElse(null));
+        if (livro.getId() == null) {
             return livroEncontrado.isPresent();
         }
 
