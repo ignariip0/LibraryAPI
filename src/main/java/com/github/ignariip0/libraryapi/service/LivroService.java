@@ -4,6 +4,7 @@ import com.github.ignariip0.libraryapi.model.GeneroLivro;
 import com.github.ignariip0.libraryapi.model.Livro;
 import com.github.ignariip0.libraryapi.repository.LivroRepository;
 import com.github.ignariip0.libraryapi.repository.specs.LivroSpecs;
+import com.github.ignariip0.libraryapi.validator.LivroValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -19,9 +20,11 @@ import static com.github.ignariip0.libraryapi.repository.specs.LivroSpecs.*;
 public class LivroService {
 
     private final LivroRepository repository;
+    private final LivroValidator validator;
 
 
     public Livro salvar(Livro livro) {
+        validator.validar(livro);
         return repository.save(livro);
     }
 
@@ -72,6 +75,7 @@ public class LivroService {
             throw new IllegalArgumentException("Para atualizar é necessário que o autor ja esteja salvo na base.");
         }
 
+        validator.validar(livro);
         repository.save(livro);
     }
 }
