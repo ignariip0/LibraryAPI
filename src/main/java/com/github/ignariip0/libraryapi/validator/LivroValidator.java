@@ -34,8 +34,7 @@ public class LivroValidator {
 
     private boolean existeLivroComIsbn(Livro livro) {
         Optional<Livro> livroEncontrado = repository.findByIsbn(livro.getIsbn());
-        System.out.println("id do livro: " + livro.getId());
-        System.out.println("id encontrado: " + livroEncontrado.map(Livro::getId).orElse(null));
+
         if (livro.getId() == null) {
             return livroEncontrado.isPresent();
         }
