@@ -25,9 +25,12 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable) // Habilitar após concluir projeto
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(configurer -> {
-                    configurer.loginPage("/login").permitAll();
+                    configurer.loginPage("/login");
                 })
                 .authorizeHttpRequests(authorize -> {
+                    authorize.requestMatchers("/login").permitAll();
+                    authorize.requestMatchers("/autores/**").hasRole("ADMIN");
+                    authorize.requestMatchers("/livros/**").hasAnyRole("ADMIN", "USER");
                     authorize.anyRequest().authenticated();
                 })
                 .build();
