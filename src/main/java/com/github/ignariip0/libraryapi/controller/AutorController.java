@@ -3,11 +3,16 @@ package com.github.ignariip0.libraryapi.controller;
 import com.github.ignariip0.libraryapi.controller.dto.AutorDTO;
 import com.github.ignariip0.libraryapi.controller.mappers.AutorMapper;
 import com.github.ignariip0.libraryapi.model.Autor;
+import com.github.ignariip0.libraryapi.model.Usuario;
+import com.github.ignariip0.libraryapi.security.SecurityService;
 import com.github.ignariip0.libraryapi.service.AutorService;
+import com.github.ignariip0.libraryapi.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -24,7 +29,6 @@ public class AutorController implements GenericController {
 
 
     private final AutorService service;
-
     private final AutorMapper mapper;
 
     @PostMapping
